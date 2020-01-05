@@ -3,7 +3,7 @@
 ### Needed Software:
 [Python 3](https://www.python.org/downloads/ "Python 3")
 **OR**
-Executable Link
+[Win10 64bit Executable](https://github.com/NicholasDawson/GooglePhotosArchiver/raw/master/Google%20Photos%20Archiver.exe)
 
 ### Needed Python Libraries:
 (Install using pip)
