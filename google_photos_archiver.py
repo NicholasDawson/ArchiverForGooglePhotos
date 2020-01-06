@@ -34,7 +34,7 @@ def get_service():
 def download_images(media_items, media_num):
     for x in media_items:
         if 'image' in x['mimeType']:
-            url = x['baseUrl'] + '=w' + x['mediaMetadata']['width'] + '-h' + x['mediaMetadata']['height']
+            url = x['baseUrl'] + '=d'
         else:
             url = x['baseUrl'] + '=dv'
         filename = str(media_num) + '_' + x['filename']
