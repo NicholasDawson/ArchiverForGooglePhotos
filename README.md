@@ -1,4 +1,7 @@
 # Google Photos Archiver
+
+> Updated Instructions 4/28/2021
+
 # How to Use
 ### Needed Software:
 [Python 3](https://www.python.org/downloads/ "Python 3")
