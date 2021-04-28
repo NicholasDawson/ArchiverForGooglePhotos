@@ -5,11 +5,10 @@
 **OR**
 [Win10 64bit Executable](https://github.com/NicholasDawson/GooglePhotosArchiver/raw/master/Google%20Photos%20Archiver.exe)
 
-### Needed Python Libraries:
+### Install Needed Python Libraries:
 (Install using pip)
-- googleapiclient
-- google_auth_oauthlib
-- google
+
+`pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib`
 
 ## Full Instructions
 1. Install python and the necessary libraries and download this repository, or download the 64bit executable version of the application to run on windows.
