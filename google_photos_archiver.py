@@ -29,7 +29,7 @@ def get_service():
         with open('photoslibrary_token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
-    return build('photoslibrary', 'v1', credentials=creds)
+    return build('photoslibrary', 'v1', credentials=creds, static_discovery=False)
 
 def download_images(media_items, media_num):
     for x in media_items:
