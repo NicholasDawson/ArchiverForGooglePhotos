@@ -3,6 +3,7 @@
 > Updated Instructions 4/28/2021
 
 # How to Use
+> Warning: EXE file doesn't contain most recent code which fixed a bug on mac, if you have any issues you may want to consider using the .py file
 ### Needed Software:
 [Python 3](https://www.python.org/downloads/ "Python 3")
 **OR**
