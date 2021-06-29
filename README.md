@@ -12,7 +12,7 @@
 ### Install Needed Python Libraries:
 (Install using pip)
 
-`pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib`
+`pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib exif`
 
 ## Full Instructions
 1. Install python and the necessary libraries and download this repository, or download the 64bit executable version of the application to run on windows.
