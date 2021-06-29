@@ -7,7 +7,7 @@
 ### Needed Software:
 [Python 3](https://www.python.org/downloads/ "Python 3")
 **OR**
-[Win10 64bit Executable](https://github.com/NicholasDawson/GooglePhotosArchiver/raw/master/Google%20Photos%20Archiver.exe)
+[Win10 64bit Executable](https://github.com/NicholasDawson/GooglePhotosArchiver/raw/master/google_photos_archiver.exe)
 
 ### Install Needed Python Libraries:
 (Install using pip)
