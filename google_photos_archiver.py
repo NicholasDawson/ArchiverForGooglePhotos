@@ -3,6 +3,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 import pickle
+from exif import Image
 from urllib.request import urlretrieve as download
 
 
@@ -40,6 +41,16 @@ def download_images(media_items, media_num):
         filename = str(media_num) + '_' + x['filename']
         print('Downloading ' + filename)
         download(url, 'Google Photos Library/' + filename)
+        
+        # Check for description metadata and add to the image if there
+        if 'description' in x:
+            print('Found Description: ' + x['description'])
+            with open('Google Photos Library/' + filename, 'rb') as image_file:
+                exif_image = Image(image_file)
+                exif_image.image_description = x['description']
+                with open('Google Photos Library/' + str(media_num) + '_desc_' + x['filename'], 'wb') as new_image:
+                    new_image.write(exif_image.get_file())
+            os.remove('Google Photos Library/' + filename)
         media_num += 1
     return media_num
 
@@ -66,4 +77,3 @@ while True:
         break
 print('All Media Has Been Downloaded.')
 print(media_num + ' items have been downloaded.')
-
