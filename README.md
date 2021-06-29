@@ -1,6 +1,6 @@
 # Google Photos Archiver
 
-> Updated Instructions 4/28/2021
+> Updated Instructions 5/28/2021
 
 # How to Use
 > Warning: EXE file doesn't contain most recent code which fixed a bug on mac, if you have any issues you may want to consider using the .py file
