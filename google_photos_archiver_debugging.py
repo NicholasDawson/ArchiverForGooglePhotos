@@ -74,7 +74,7 @@ next = results['nextPageToken']
 
 while True:
     results = service.mediaItems().list(pageSize=100, pageToken=next).execute()
-    with open('result' + media_num + '.json', 'w') as f:
+    with open('result' + str(media_num) + '.json', 'w') as f:
         print('saving results...')
         f.write(json.dumps(results))
     if mediaItem in results:
