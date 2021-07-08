@@ -77,9 +77,7 @@ while True:
     with open('result' + str(media_num) + '.json', 'w') as f:
         print('saving results...')
         f.write(json.dumps(results))
-    if mediaItem not in results:
-        pass
-    else:
+    if 'mediaItem' in results:
         media_num = download_images(results['mediaItems'], media_num)
     try:
         next = results['nextPageToken']
