@@ -16,6 +16,11 @@ from PIL import Image
 from tqdm import tqdm
 
 """
+Archiver for Google Photos
+By: Nick Dawson | nick@ndawson.me
+"""
+
+"""
     Archiver For Google Photos
     - A tool to maintain an archive/mirror of your Google Photos library for backup purposes.
     Copyright (C) 2021  Nicholas Dawson
