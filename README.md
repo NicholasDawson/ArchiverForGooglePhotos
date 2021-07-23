@@ -82,7 +82,7 @@ Download just your shared albums
 Download just your favorited items
 `gparch_cli -f`
 
-Specify the amount of threads you want to download with:
+Specify the amount of threads you want to download with to be 12:
 `gparch_cli -t 12`
 
 You can combine any of the following commands to do what you specifically want.
