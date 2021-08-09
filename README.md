@@ -1,6 +1,6 @@
 # Google Photos Archiver
-> Updated Instructions 7/23/2021
-> Version 2.0.0
+> Updated Instructions 8/9/2021
+> Version 2.0.1
 
 # Instructions:
 1. Download the script (exe or python script listed below)
@@ -43,6 +43,7 @@ optional arguments:
                         path to Google Cloud OAuth2 Credentials (default: {CURRENT_DIR}/credentials.json)
   -t THREADS, --threads THREADS
                         amount of threads to use when downloading media items (default: 8)
+  -d, --debug           enables debugging mode
   -a, --albums          download all albums YOU have created
   -s, --shared          download all shared albums (with you/from you)
   -f, --favorites       download all media from your library that is marked as favorite
