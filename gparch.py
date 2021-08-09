@@ -40,7 +40,7 @@ By: Nick Dawson | nick@ndawson.me
 
 """
 
-VERSION = "2.0.0"
+VERSION = "2.0.1"
 
 # Define Scopes for Application
 SCOPES = [
@@ -118,7 +118,7 @@ def load_database(path, init_dict):
 
 
 class PhotosAccount(object):
-    def __init__(self, credentials_path, directory, thread_count):
+    def __init__(self, credentials_path, directory, thread_count, debug):
         # Define directory instance variables
         self.base_dir = directory
         self.lib_dir = self.base_dir + "/Library"
@@ -132,6 +132,10 @@ class PhotosAccount(object):
         self.service = None  # is None because it will be defined later by calling "get_google_api_service"
         self.timer = time()
         self.downloads = 0
+        self.debug = debug
+        
+        if self.debug:
+            safe_mkdir('debug')
 
         # Define/Init Database
         self.db_path = self.base_dir + "/" + DATABASE_NAME
@@ -374,9 +378,14 @@ class PhotosAccount(object):
         )
 
     def list_media_items(self):
+        num = 0
         media_items_list = []
         request = self.service.mediaItems().list(pageSize=100).execute()  # Max is 50
+        if not request:
+            return {}
         while True:
+            if self.debug:
+                save_json(request, 'debug/media' + str(num) + '.json')
             media_items_list += request["mediaItems"]
             if "nextPageToken" in request:
                 next_page = request["nextPageToken"]
@@ -387,12 +396,20 @@ class PhotosAccount(object):
                 )
             else:
                 break
+            num += 1
+        if self.debug:
+            save_json(media_items_list, "debug/media_items_list.json")
         return media_items_list
 
     def list_albums(self):
+        num = 0
         album_list = []
         request = self.service.albums().list(pageSize=50).execute()  # Max is 50
+        if not request:
+            return {}
         while True:
+            if self.debug:
+                save_json(request, 'debug/albums' + str(num) + '.json')
             album_list += request["albums"]
             if "nextPageToken" in request:
                 next_page = request["nextPageToken"]
@@ -403,12 +420,20 @@ class PhotosAccount(object):
                 )
             else:
                 break
+            num += 1
+        if self.debug:
+            save_json(album_list, "debug/album_list.json")
         return album_list
 
     def list_shared_albums(self):
         shared_album_list = []
         request = self.service.sharedAlbums().list(pageSize=50).execute()  # Max is 50
+        num = 0
+        if not request:
+            return {}
         while True:
+            if self.debug:
+                save_json(request, 'debug/shared_albums' + str(num) + '.json')
             shared_album_list += request["sharedAlbums"]
             if "nextPageToken" in request:
                 next_page = request["nextPageToken"]
@@ -419,6 +444,9 @@ class PhotosAccount(object):
                 )
             else:
                 break
+            num += 1
+        if self.debug:
+            save_json(shared_album_list, "debug/shared_album_list.json")
         return shared_album_list
 
     def search_favorites(self):
@@ -428,15 +456,22 @@ class PhotosAccount(object):
             "pageSize": 100,  # Max is 100
             "pageToken": "",
         }
-
+        num = 0
         # Make request
         favorites_list = []
         request = self.service.mediaItems().search(body=request_body).execute()
+        if not request:
+            return {}
         while True:
+            if self.debug:
+                save_json(request, 'debug/favorites' + str(num) + '.json')
             favorites_list += request["mediaItems"]
             if "nextPageToken" in request:
                 request_body["pageToken"] = request["nextPageToken"]
                 request = self.service.mediaItems().search(body=request_body).execute()
             else:
                 break
+            num += 1
+        if self.debug:
+            save_json(favorites_list, "debug/favorites_list.json")
         return favorites_list
