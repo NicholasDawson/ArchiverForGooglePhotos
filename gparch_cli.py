@@ -59,6 +59,12 @@ if __name__ == "__main__":
         type=str,
     )
     parser.add_argument(
+        "-d",
+        "--debug",
+        help="enable debugging mode",
+        action="store_true"
+    )
+    parser.add_argument(
         "-t",
         "--threads",
         help="amount of threads to use when downloading media items (default: 8)",
@@ -106,7 +112,7 @@ if __name__ == "__main__":
         args.credentials = args.directory + "/credentials.json"
 
     # Init PhotosAccount object
-    account = PhotosAccount(args.credentials, args.directory, args.threads)
+    account = PhotosAccount(args.credentials, args.directory, args.threads, args.debug)
 
     account.get_google_api_service()
 
