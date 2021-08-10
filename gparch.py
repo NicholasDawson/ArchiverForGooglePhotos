@@ -41,7 +41,7 @@ By: Nick Dawson | nick@ndawson.me
 
 """
 
-VERSION = "2.0.3"
+VERSION = "2.0.5"
 
 # Define Scopes for Application
 SCOPES = [
@@ -325,9 +325,6 @@ class PhotosAccount(object):
             self.download_single_album(album, True)
 
     def download_single_album(self, album, shared=False):
-        # Sanitize album title
-        album["title"] = sanitize(album["title"])
-    
         # Return if the album has no mediaItems to download
         # Unsure of how this occurs, but there are album entries that exist
         #   where there I don't have permission, weird bug...
@@ -337,6 +334,9 @@ class PhotosAccount(object):
         # Next check to see if the album has a title, if it doesn't give it default name
         if "title" not in album:
             album["title"] = "Unnamed Album"
+        
+        # Sanitize album title
+        album["title"] = sanitize(album["title"])
 
         # Make request
         album_items = []
