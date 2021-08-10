@@ -392,7 +392,8 @@ class PhotosAccount(object):
         while True:
             if self.debug:
                 save_json(request, 'debug/media' + str(num) + '.json')
-            media_items_list += request["mediaItems"]
+            if "mediaItems" in request:
+                media_items_list += request["mediaItems"]
             if "nextPageToken" in request:
                 next_page = request["nextPageToken"]
                 request = (
