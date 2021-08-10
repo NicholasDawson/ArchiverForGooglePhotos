@@ -40,7 +40,7 @@ By: Nick Dawson | nick@ndawson.me
 
 """
 
-VERSION = "2.0.1"
+VERSION = "2.0.2"
 
 # Define Scopes for Application
 SCOPES = [
@@ -96,7 +96,7 @@ def auto_filename(path, instance=0):
 
 
 def save_json(variable, path):
-    json.dump(variable, open(path, "w"))
+    json.dump(variable, open(auto_filename(path), "w"))
 
 
 def load_json(path):
@@ -341,17 +341,22 @@ class PhotosAccount(object):
             "pageSize": 100,  # Max is 100
             "pageToken": "",
         }
-
+        num = 0
         request = (
             self.service.mediaItems().search(body=request_body).execute()
         )  # 100 is max
-        while True:
+        if not request:
+            return
+        while True: 
             album_items += request["mediaItems"]
             if "nextPageToken" in request:
                 request_body["pageToken"] = request["nextPageToken"]
                 request = self.service.mediaItems().search(body=request_body).execute()
             else:
                 break
+        
+        if self.debug:
+            save_json(album_items, 'debug/' + album["title"] + '.json')
 
         # Directory where the album exists
         album_path = None
