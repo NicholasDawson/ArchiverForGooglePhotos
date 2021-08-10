@@ -11,7 +11,7 @@ If you need assistance or want to report an issue fill out an [Issue Report](htt
 
 # Downloads
 ## Windows 10 (64-bit) Executable
-If you are unfamiliar with python or computers in general I recommend you download the [Win10 64bit Executable](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases/download/v2.0.2/gparch_cli.v2.0.2.exe.win-amd64.3.9.zip) as it will not require any special installation.
+If you are unfamiliar with python or computers in general I recommend you download the [Win10 64bit Executable](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases/download/v2.0.2/gparch_cli.v2.0.2.exe.win-amd643.9.zip) as it will not require any special installation.
 
 ## Python Script
 If you are familiar with python, just download the [source code](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases/tag/v2.0.2)
