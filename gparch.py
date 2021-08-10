@@ -472,7 +472,8 @@ class PhotosAccount(object):
         while True:
             if self.debug:
                 save_json(request, 'debug/favorites' + str(num) + '.json')
-            favorites_list += request["mediaItems"]
+            if "mediaItems" in request:
+                favorites_list += request["mediaItems"]
             if "nextPageToken" in request:
                 request_body["pageToken"] = request["nextPageToken"]
                 request = self.service.mediaItems().search(body=request_body).execute()
