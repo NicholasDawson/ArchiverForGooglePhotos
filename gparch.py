@@ -40,7 +40,7 @@ By: Nick Dawson | nick@ndawson.me
 
 """
 
-VERSION = "2.0.2"
+VERSION = "2.0.3"
 
 # Define Scopes for Application
 SCOPES = [
@@ -375,12 +375,16 @@ class PhotosAccount(object):
             self.insert_album(album["id"], album_path, album["title"], shared)
 
         processed_items = self.process_media_items(album_items, album_path, album["id"])
-
-        self.download(
-            processed_items,
-            f"Downloading {'Shared ' if shared else ''}Album: \"{album['title']}\"",
-            self.thread_count,
-        )
+        
+        if processed_items:
+            self.download(
+                processed_items,
+                f"Downloading {'Shared ' if shared else ''}Album: \"{album['title']}\"",
+                self.thread_count,
+            )
+        else:
+            print(f"Downloading {'Shared ' if shared else ''}Album: \"{album['title']}\"")
+            print("Everything already downloaded.")
 
     def list_media_items(self):
         num = 0
