@@ -10,6 +10,7 @@ import piexif
 import piexif.helper
 import requests
 from google.auth.transport.requests import Request
+from sanitize_filename import sanitize
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from PIL import Image
@@ -270,6 +271,7 @@ class PhotosAccount(object):
             # -> if it already exists then just pull the item_path from the existing db entry
             item_db_entry = self.select_media_item(item["id"])
             if not item_db_entry:
+                item["filename"] = sanitize(item["filename"])
                 item_path = auto_filename(f'{save_directory}/{item["filename"]}')
                 self.insert_media_item(
                     item["id"],
@@ -323,6 +325,9 @@ class PhotosAccount(object):
             self.download_single_album(album, True)
 
     def download_single_album(self, album, shared=False):
+        # Sanitize album title
+        album["title"] = sanitize(album["title"])
+    
         # Return if the album has no mediaItems to download
         # Unsure of how this occurs, but there are album entries that exist
         #   where there I don't have permission, weird bug...
