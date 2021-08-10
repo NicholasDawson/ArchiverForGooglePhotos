@@ -346,7 +346,8 @@ class PhotosAccount(object):
             self.service.mediaItems().search(body=request_body).execute()
         )  # 100 is max
         while True:
-            album_items += request["mediaItems"]
+            if "mediaItems" in request:
+                album_items += request["mediaItems"]
             if "nextPageToken" in request:
                 request_body["pageToken"] = request["nextPageToken"]
                 request = self.service.mediaItems().search(body=request_body).execute()
