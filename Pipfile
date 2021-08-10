@@ -15,6 +15,7 @@ google-auth-oauthlib = "*"
 isort = "*"
 cx-freeze = "*"
 colorama = "*"
+sanitize-filename = "*"
 
 [dev-packages]
 
