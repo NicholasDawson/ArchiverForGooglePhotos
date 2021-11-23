@@ -18,6 +18,6 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.version }}
           files: |
-            build/gparch_cli_win64zip
+            build/gparch_cli_win64.zip
             build/gparch_cli_linux.tar.gz
             build/gparch_cli_macos.zip
