@@ -1,21 +1,17 @@
 name: release
 
-# Only trigger, when the build-exe workflow succeeded
 on:
-  workflow_run:
-    workflows: ["build-exe"]
-    types:
-      - completed
+  create:
 
 jobs:
   release:
+    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
       - name: Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             build/gparch_cli_win64zip
