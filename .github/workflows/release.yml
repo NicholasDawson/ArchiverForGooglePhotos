@@ -1,0 +1,22 @@
+name: release
+
+# Only trigger, when the build-exe workflow succeeded
+on:
+  workflow_run:
+    workflows: ["build-exe"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/gparch_cli_win64zip
+            build/gparch_cli_linux.tar.gz
+            build/gparch_cli_macos.zip
