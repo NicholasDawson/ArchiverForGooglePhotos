@@ -16,7 +16,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: github.event.inputs.version
+          tag_name: ${{ github.event.inputs.version }}
           files: |
             build/gparch_cli_win64zip
             build/gparch_cli_linux.tar.gz
