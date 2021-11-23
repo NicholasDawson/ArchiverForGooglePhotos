@@ -1,5 +1,3 @@
-# This is a basic workflow to help you get started with Actions
-
 name: build-exe
 
 # Controls when the workflow will run
@@ -32,7 +30,7 @@ jobs:
       - run: pipenv install
       
       # Build Executable using cx_freeze
-      - run: python ./cxfreeze_setup.py build -b win64
+      - run: pipenv run python ./cxfreeze_setup.py build -b win64
       
       # Zip Executable
       - run: tar.exe -acf gparch_cli_win64.zip win64
@@ -54,7 +52,7 @@ jobs:
       - run: pipenv install
       
       # Build Executable using cx_freeze
-      - run: python ./cxfreeze_setup.py build -b linux
+      - run: pipenv run python ./cxfreeze_setup.py build -b linux
       
       # tar.gz Executable
       - run: tar -czvf gparch_cli_linux.tar.gz linux
@@ -76,7 +74,7 @@ jobs:
       - run: pipenv install
       
       # Build Executable using cx_freeze
-      - run: python ./cxfreeze_setup.py build -b macos
+      - run: pipenv run python ./cxfreeze_setup.py build -b macos
       
       # Zip Executable
       - run: zip gparch_cli_mac.zip macos
