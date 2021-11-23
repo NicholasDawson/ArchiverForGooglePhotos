@@ -225,6 +225,7 @@ class PhotosAccount(object):
                             # This value here is to catch a specific scenario with file extensions that have
                             # descriptions that are unsupported by Pillow so the program can't modify the EXIF data.
                             print(' [INFO] media file unsupported, can\'t write description to EXIF data.')
+                            open(path, "wb").write(r.content)
                     else:
                         open(path, "wb").write(r.content)
                     self.downloads += 1
