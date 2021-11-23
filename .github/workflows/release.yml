@@ -1,11 +1,14 @@
 name: release
 
 on:
-  create:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'     
+        required: true
 
 jobs:
   release:
-    if: ${{ startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -13,6 +16,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: github.event.inputs.version
           files: |
             build/gparch_cli_win64zip
             build/gparch_cli_linux.tar.gz
