@@ -206,20 +206,25 @@ class PhotosAccount(object):
                 r = requests.get(url)
                 if r.status_code == 200:
                     if description:
-                        img = Image.open(io.BytesIO(r.content))
-                        exif_dict = piexif.load(img.info["exif"])
-                        exif_dict["Exif"][
-                            piexif.ExifIFD.UserComment
-                        ] = piexif.helper.UserComment.dump(
-                            description, encoding="unicode"
-                        )
+                        try:
+                            img = Image.open(io.BytesIO(r.content))
+                            exif_dict = piexif.load(img.info["exif"])
+                            exif_dict["Exif"][
+                                piexif.ExifIFD.UserComment
+                            ] = piexif.helper.UserComment.dump(
+                                description, encoding="unicode"
+                            )
 
-                        # This is a known bug with piexif (https://github.com/hMatoba/Piexif/issues/95)
-                        if 41729 in exif_dict["Exif"]:
-                            exif_dict["Exif"][41729] = bytes(exif_dict["Exif"][41729])
+                            # This is a known bug with piexif (https://github.com/hMatoba/Piexif/issues/95)
+                            if 41729 in exif_dict["Exif"]:
+                                exif_dict["Exif"][41729] = bytes(exif_dict["Exif"][41729])
 
-                        exif_bytes = piexif.dump(exif_dict)
-                        img.save(path, exif=exif_bytes)
+                            exif_bytes = piexif.dump(exif_dict)
+                            img.save(path, exif=exif_bytes)
+                        except ValueError:
+                            # This value here is to catch a specific scenario with file extensions that have
+                            # descriptions that are unsupported by Pillow so the program can't modify the EXIF data.
+                            print(' [INFO] media file unsupported, can\'t write description to EXIF data.')
                     else:
                         open(path, "wb").write(r.content)
                     self.downloads += 1
@@ -228,7 +233,7 @@ class PhotosAccount(object):
             else:
                 return False
         except Exception as e:
-            print("ERROR: media item could not be downloaded because:", e)
+            print(" [ERROR] media item could not be downloaded because:", e)
             return False
 
     def download(self, entries, desc, thread_count):
