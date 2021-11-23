@@ -15,6 +15,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             build/gparch_cli_win64zip
