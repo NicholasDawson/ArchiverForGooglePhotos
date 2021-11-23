@@ -106,7 +106,7 @@ jobs:
         run: pipenv run python ./cxfreeze_setup.py build -b macos
       
       - name: Compress the executable
-        run: zip build/gparch_cli_macos.zip macos
+        run: zip -r build/gparch_cli_macos.zip macos
         
       - name: Push the build to the repository
         uses: EndBug/add-and-commit@v7
