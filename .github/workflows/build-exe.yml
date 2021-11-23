@@ -19,21 +19,33 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2     # able to checkout repo
-      - run: pipx install pipenv      # install pipenv
-      - uses: actions/setup-python@v2 # install python
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      
+      - name: Install pipenv
+        run: pipx install pipenv
+      
+      - name: Install Python 3.9
+        uses: actions/setup-python@v2
         with:
           python-version: '3.9'
           cache: 'pipenv'
       
-      # Install dependencies
-      - run: pipenv install
+      - name: Setup environment
+        run: pipenv install
       
-      # Build Executable using cx_freeze
-      - run: pipenv run python ./cxfreeze_setup.py build -b win64
+      - name: Build the executable using cx_freeze
+        run: pipenv run python ./cxfreeze_setup.py build -b win64
       
-      # Zip Executable
-      - run: tar.exe -acf gparch_cli_win64.zip win64
+      - name: Compress the executable
+        run: tar.exe -acf build/gparch_cli_win64.zip win64
+        
+      - name: Push the build to the repository
+        uses: EndBug/add-and-commit@v7
+        with:
+          default_author: github_actions
+          message: 'Built Windows x64 Executable'
+          add: gparch_cli_win64.zip
       
   build-linux:
     # The type of runner that the job will run on
@@ -41,21 +53,33 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2     # able to checkout repo
-      - run: pipx install pipenv      # install pipenv
-      - uses: actions/setup-python@v2 # install python
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      
+      - name: Install pipenv
+        run: pipx install pipenv
+      
+      - name: Install Python 3.9
+        uses: actions/setup-python@v2
         with:
           python-version: '3.9'
           cache: 'pipenv'
       
-      # Install dependencies
-      - run: pipenv install
+      - name: Setup environment
+        run: pipenv install
       
-      # Build Executable using cx_freeze
-      - run: pipenv run python ./cxfreeze_setup.py build -b linux
+      - name: Build the executable using cx_freeze
+        run: pipenv run python ./cxfreeze_setup.py build -b linux
       
-      # tar.gz Executable
-      - run: tar -czvf gparch_cli_linux.tar.gz linux
+      - name: Compress the executable
+        run: tar -czvf build/gparch_cli_linux.tar.gz linux
+        
+      - name: Push the build to the repository
+        uses: EndBug/add-and-commit@v7
+        with:
+          default_author: github_actions
+          message: 'Built Linux x64 Executable'
+          add: build/gparch_cli_linux.tar.gz
       
   build-macos:
     # The type of runner that the job will run on
@@ -63,18 +87,30 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2     # able to checkout repo
-      - run: pipx install pipenv      # install pipenv
-      - uses: actions/setup-python@v2 # install python
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      
+      - name: Install pipenv
+        run: pipx install pipenv
+      
+      - name: Install Python 3.9
+        uses: actions/setup-python@v2
         with:
           python-version: '3.9'
           cache: 'pipenv'
       
-      # Install dependencies
-      - run: pipenv install
+      - name: Setup environment
+        run: pipenv install
       
-      # Build Executable using cx_freeze
-      - run: pipenv run python ./cxfreeze_setup.py build -b macos
+      - name: Build the executable using cx_freeze
+        run: pipenv run python ./cxfreeze_setup.py build -b macos
       
-      # Zip Executable
-      - run: zip gparch_cli_mac.zip macos
+      - name: Compress the executable
+        run: zip gparch_cli_macos.zip macos
+        
+      - name: Push the build to the repository
+        uses: EndBug/add-and-commit@v7
+        with:
+          default_author: github_actions
+          message: 'Built macOS x64 Executable'
+          add: build/gparch_cli_macos.zip
