@@ -45,7 +45,7 @@ jobs:
         with:
           default_author: github_actions
           message: 'Built Windows x64 Executable'
-          pull: 'NO-PULL'
+          pull: '--rebase --autostash'
           add: build/gparch_cli_win64.zip
       
   build-linux:
@@ -80,7 +80,7 @@ jobs:
         with:
           default_author: github_actions
           message: 'Built Linux x64 Executable'
-          pull: 'NO-PULL'
+          pull: '--rebase --autostash'
           add: build/gparch_cli_linux.tar.gz
       
   build-macos:
@@ -115,5 +115,5 @@ jobs:
         with:
           default_author: github_actions
           message: 'Built macOS x64 Executable'
-          pull: 'NO-PULL'
+          pull: '--rebase --autostash'
           add: build/gparch_cli_macos.zip
