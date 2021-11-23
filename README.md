@@ -1,4 +1,5 @@
 # Google Photos Archiver
+[![build-exe](https://github.com/NicholasDawson/ArchiverForGooglePhotos/actions/workflows/build-exe.yml/badge.svg)](https://github.com/NicholasDawson/ArchiverForGooglePhotos/actions/workflows/build-exe.yml)
 
 # Instructions:
 1. Download the script (exe or python script listed below)
