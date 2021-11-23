@@ -8,7 +8,7 @@ on:
       - completed
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
