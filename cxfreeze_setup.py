@@ -2,6 +2,7 @@ from os.path import basename, join
 
 import pkg_resources
 from cx_Freeze import Executable, setup
+from gparch import VERSION
 
 """
     Archiver For Google Photos
@@ -64,7 +65,7 @@ base = None
 
 setup(
     name="Archiver for Google Photos (CLI)",
-    version="2.0.0",
+    version=VERSION,
     description="A tool to maintain an archive/mirror of your Google Photos library for backup purposes.",
     options={"build_exe": build_exe_options},
     executables=[Executable("gparch_cli.py", base=base)],

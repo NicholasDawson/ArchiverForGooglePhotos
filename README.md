@@ -1,6 +1,4 @@
 # Google Photos Archiver
-> Updated Instructions 8/9/2021
-> Version 2.0.6
 
 # Instructions:
 1. Download the script (exe or python script listed below)
@@ -11,7 +9,7 @@ If you need assistance or want to report an issue fill out an [Issue Report](htt
 
 # Downloads
 ## Windows 10 (64-bit) Executable
-If you are unfamiliar with python or computers in general I recommend you download the [Win10 64bit Executable](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases/download/v2.0.6/gparch_cli.v2.0.6.exe.win-amd643.9.zip) as it will not require any special installation.
+If you are unfamiliar with python or computers in general I recommend you download the [Win10 64bit Executable](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases) as it will not require any special installation.
 
 ## Python Script
 If you are familiar with python, just download the [source code](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases/tag/v2.0.6)
@@ -91,3 +89,13 @@ You can combine any of the following commands to do what you specifically want.
 - If no credentials are provided the program will search for 'credentials.json' in the directory.
 - If no download options are provided, the program will download everything.
 - The program automatically skips downloading existing files so running the program with any download option after downloading items already will update everything without re-downloading or deleting existing media. It will only ensure everything is downloaded from Google Photos.
+
+## Contributors
+### Loading Environment
+Install `pipenv` using `pip install pipenv` then in this repo's root directory type:
+`pipenv install` to build the virtual environment.
+
+### Building EXE for Windows
+Run `py cxfreeze_setup.py build`
+
+The exe will appear in the build directory.
