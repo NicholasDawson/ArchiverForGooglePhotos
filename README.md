@@ -99,7 +99,7 @@ You can combine any of the following commands to do what you specifically want.
 Install `pipenv` using `pip install pipenv` then in this repo's root directory type:
 `pipenv install` to build the virtual environment.
 
-### Building EXE for Windows
+### Building Executable
 Run `py cxfreeze_setup.py build`
 
-The exe will appear in the build directory.
+An executable built for your system will appear in the build directory.
