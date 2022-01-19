@@ -16,7 +16,7 @@ If you need assistance or want to report an issue fill out an [Issue Report](htt
 
 
 ## Python Script
-If you are familiar with python, just download the [source code](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases/tag/v2.0.6)
+If you are familiar with python, just download the [source code](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases)
 
 Install [pipenv](https://pipenv-fork.readthedocs.io/en/latest/install.html)
 `pip install pipenv`
