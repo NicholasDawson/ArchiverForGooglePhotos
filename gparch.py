@@ -41,7 +41,7 @@ By: Nick Dawson | nick@ndawson.me
 
 """
 
-VERSION = "2.1.1"
+VERSION = "2.1.2"
 
 # Define Scopes for Application
 SCOPES = [
