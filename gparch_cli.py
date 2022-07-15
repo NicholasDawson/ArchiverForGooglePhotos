@@ -59,10 +59,7 @@ if __name__ == "__main__":
         type=str,
     )
     parser.add_argument(
-        "-d",
-        "--debug",
-        help="enable debugging mode",
-        action="store_true"
+        "-d", "--debug", help="enable debugging mode", action="store_true"
     )
     parser.add_argument(
         "-t",
