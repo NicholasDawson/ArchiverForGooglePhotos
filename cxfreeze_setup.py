@@ -58,7 +58,7 @@ build_exe_options = {
         "tqdm",
         "pkg_resources",
     ],
-    "include_files": collect_dist_info("google_api_python_client") + ["gparch.py"],
+    "include_files": collect_dist_info("google_api_python_client") + ["gparch.py"]
 }
 
 base = None
@@ -69,4 +69,5 @@ setup(
     description="A tool to maintain an archive/mirror of your Google Photos library for backup purposes.",
     options={"build_exe": build_exe_options},
     executables=[Executable("gparch_cli.py", base=base)],
+    py_modules=[]
 )
