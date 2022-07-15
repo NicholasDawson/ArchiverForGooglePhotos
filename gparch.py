@@ -41,7 +41,7 @@ By: Nick Dawson | nick@ndawson.me
 
 """
 
-VERSION = "2.1.2"
+VERSION = "2.2.0"
 
 # Define Scopes for Application
 SCOPES = [
@@ -134,9 +134,9 @@ class PhotosAccount(object):
         self.timer = time()
         self.downloads = 0
         self.debug = debug
-        
+
         if self.debug:
-            safe_mkdir('debug')
+            safe_mkdir("debug")
 
         # Define/Init Database
         self.db_path = self.base_dir + "/" + DATABASE_NAME
@@ -201,10 +201,11 @@ class PhotosAccount(object):
 
     def download_media_item(self, entry):
         try:
-            url, path, description = entry
+            uuid, album_uuid, url, path, description = entry
             if not os.path.isfile(path):
                 r = requests.get(url)
                 if r.status_code == 200:
+                    path = auto_filename(path)
                     if description:
                         try:
                             img = Image.open(io.BytesIO(r.content))
@@ -217,19 +218,28 @@ class PhotosAccount(object):
 
                             # This is a known bug with piexif (https://github.com/hMatoba/Piexif/issues/95)
                             if 41729 in exif_dict["Exif"]:
-                                exif_dict["Exif"][41729] = bytes(exif_dict["Exif"][41729])
+                                exif_dict["Exif"][41729] = bytes(
+                                    exif_dict["Exif"][41729]
+                                )
 
                             exif_bytes = piexif.dump(exif_dict)
                             img.save(path, exif=exif_bytes)
                         except ValueError:
                             # This value here is to catch a specific scenario with file extensions that have
                             # descriptions that are unsupported by Pillow so the program can't modify the EXIF data.
-                            print(' [INFO] media file unsupported, can\'t write description to EXIF data.')
+                            print(
+                                " [INFO] media file unsupported, can't write description to EXIF data."
+                            )
                             open(path, "wb").write(r.content)
                     else:
                         open(path, "wb").write(r.content)
+
                     self.downloads += 1
-                    return True
+                    return (
+                        uuid,
+                        path,
+                        album_uuid,
+                    )
 
             else:
                 return False
@@ -241,8 +251,16 @@ class PhotosAccount(object):
         result = ThreadPool(thread_count).imap_unordered(
             self.download_media_item, entries
         )
-        for _ in tqdm(result, unit=" media items", total=len(entries), desc=desc):
-            pass
+        for downloaded_entry in tqdm(
+            result, unit=" media items", total=len(entries), desc=desc
+        ):
+            if downloaded_entry:
+                uuid, path, album_uuid = downloaded_entry
+                self.insert_media_item(
+                    uuid,
+                    path,
+                    album_uuid,
+                )
 
     def select_media_item(self, uuid):
         return self.cur.execute(
@@ -273,17 +291,12 @@ class PhotosAccount(object):
             item_path = None
 
             # Select the media item from the database
-            # -> if it exists then insert a new media item and set the item_path to the newly set path
+            # -> if it doesn't exist then generate the item_path
             # -> if it already exists then just pull the item_path from the existing db entry
             item_db_entry = self.select_media_item(item["id"])
             if not item_db_entry:
                 item["filename"] = sanitize(item["filename"])
-                item_path = auto_filename(f'{save_directory}/{item["filename"]}')
-                self.insert_media_item(
-                    item["id"],
-                    item_path,
-                    album_uuid,
-                )
+                item_path = f'{save_directory}/{item["filename"]}'
             else:
                 item_path = item_db_entry[1]
 
@@ -297,6 +310,8 @@ class PhotosAccount(object):
             if "image" in item["mimeType"]:
                 media.append(
                     (
+                        item["id"],
+                        album_uuid,
                         item["baseUrl"] + "=d",
                         item_path,
                         item["description"],
@@ -306,6 +321,8 @@ class PhotosAccount(object):
             elif "video" in item["mimeType"]:
                 media.append(
                     (
+                        item["id"],
+                        album_uuid,
                         item["baseUrl"] + "=dv",
                         item_path,
                         item["description"],
@@ -340,7 +357,7 @@ class PhotosAccount(object):
         # Next check to see if the album has a title, if it doesn't give it default name
         if "title" not in album:
             album["title"] = "Unnamed Album"
-        
+
         # Sanitize album title
         album["title"] = sanitize(album["title"])
 
@@ -366,9 +383,9 @@ class PhotosAccount(object):
                 request = self.service.mediaItems().search(body=request_body).execute()
             else:
                 break
-        
+
         if self.debug:
-            save_json(album_items, 'debug/' + album["title"] + '.json')
+            save_json(album_items, "debug/" + album["title"] + ".json")
 
         # Directory where the album exists
         album_path = None
@@ -387,7 +404,7 @@ class PhotosAccount(object):
             self.insert_album(album["id"], album_path, album["title"], shared)
 
         processed_items = self.process_media_items(album_items, album_path, album["id"])
-        
+
         if processed_items:
             self.download(
                 processed_items,
@@ -395,7 +412,9 @@ class PhotosAccount(object):
                 self.thread_count,
             )
         else:
-            print(f"Downloading {'Shared ' if shared else ''}Album: \"{album['title']}\"")
+            print(
+                f"Downloading {'Shared ' if shared else ''}Album: \"{album['title']}\""
+            )
             print("Everything already downloaded.")
 
     def list_media_items(self):
@@ -406,7 +425,7 @@ class PhotosAccount(object):
             return {}
         while True:
             if self.debug:
-                save_json(request, 'debug/media' + str(num) + '.json')
+                save_json(request, "debug/media" + str(num) + ".json")
             if "mediaItems" in request:
                 media_items_list += request["mediaItems"]
             if "nextPageToken" in request:
@@ -431,7 +450,7 @@ class PhotosAccount(object):
             return {}
         while True:
             if self.debug:
-                save_json(request, 'debug/albums' + str(num) + '.json')
+                save_json(request, "debug/albums" + str(num) + ".json")
             if "albums" in request:
                 album_list += request["albums"]
             if "nextPageToken" in request:
@@ -456,7 +475,7 @@ class PhotosAccount(object):
             return {}
         while True:
             if self.debug:
-                save_json(request, 'debug/shared_albums' + str(num) + '.json')
+                save_json(request, "debug/shared_albums" + str(num) + ".json")
             shared_album_list += request["sharedAlbums"]
             if "nextPageToken" in request:
                 next_page = request["nextPageToken"]
@@ -487,7 +506,7 @@ class PhotosAccount(object):
             return {}
         while True:
             if self.debug:
-                save_json(request, 'debug/favorites' + str(num) + '.json')
+                save_json(request, "debug/favorites" + str(num) + ".json")
             if "mediaItems" in request:
                 favorites_list += request["mediaItems"]
             if "nextPageToken" in request:
