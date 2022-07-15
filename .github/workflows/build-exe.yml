@@ -1,13 +1,6 @@
 name: build-exe
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -39,17 +32,15 @@ jobs:
       
       - name: Compress the executable
         run: tar.exe -acf build/gparch_cli_win64.zip win64
-        
-      - name: Push the build to the repository
-        uses: EndBug/add-and-commit@v7
+
+      - name: Upload executable
+      - uses: actions/upload-artifact@v3
         with:
-          default_author: github_actions
-          message: 'Built Windows x64 Executable'
-          pull: '--rebase --autostash'
-          add: build/gparch_cli_win64.zip
+          name: gparch_cli_win64
+          path: build/gparch_cli_win64.zip
+          retention-days: 7
       
   build-linux:
-    needs: build-windows
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -75,17 +66,15 @@ jobs:
       
       - name: Compress the executable
         run: tar -czvf build/gparch_cli_linux.tar.gz linux
-        
-      - name: Push the build to the repository
-        uses: EndBug/add-and-commit@v7
+
+      - name: Upload executable
+      - uses: actions/upload-artifact@v3
         with:
-          default_author: github_actions
-          message: 'Built Linux x64 Executable'
-          pull: '--rebase --autostash'
-          add: build/gparch_cli_linux.tar.gz
+          name: gparch_cli_linux
+          path: build/gparch_cli_linux.tar.gz
+          retention-days: 7
       
   build-macos:
-    needs: [build-windows, build-linux]
     # The type of runner that the job will run on
     runs-on: macos-latest
 
@@ -111,11 +100,10 @@ jobs:
       
       - name: Compress the executable
         run: zip -r build/gparch_cli_macos.zip macos
-        
-      - name: Push the build to the repository
-        uses: EndBug/add-and-commit@v7
+
+      - name: Upload executable
+      - uses: actions/upload-artifact@v3
         with:
-          default_author: github_actions
-          message: 'Built macOS x64 Executable'
-          pull: '--rebase --autostash'
-          add: build/gparch_cli_macos.zip
+          name: gparch_cli_macos
+          path: build/gparch_cli_macos.zip
+          retention-days: 7
