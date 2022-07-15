@@ -8,16 +8,135 @@ on:
         required: true
 
 jobs:
+  build-windows:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      
+      - name: Install pipenv
+        run: pipx install pipenv
+      
+      - name: Install Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          cache: 'pipenv'
+      
+      - name: Setup environment
+        run: pipenv install
+      
+      - name: Build the executable using cx_freeze
+        run: pipenv run python ./cxfreeze_setup.py build -b win64
+      
+      - name: Compress the executable
+        run: tar.exe -acf build/gparch_cli_win64.zip win64
+
+      - name: Upload executable
+      - uses: actions/upload-artifact@v3
+        with:
+          name: gparch_cli_win64
+          path: build/gparch_cli_win64.zip
+          retention-days: 1
+      
+  build-linux:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      
+      - name: Install pipenv
+        run: pipx install pipenv
+      
+      - name: Install Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          cache: 'pipenv'
+      
+      - name: Setup environment
+        run: pipenv install
+      
+      - name: Build the executable using cx_freeze
+        run: pipenv run python ./cxfreeze_setup.py build -b linux
+      
+      - name: Compress the executable
+        run: tar -czvf build/gparch_cli_linux.tar.gz linux
+
+      - name: Upload executable
+      - uses: actions/upload-artifact@v3
+        with:
+          name: gparch_cli_linux
+          path: build/gparch_cli_linux.tar.gz
+          retention-days: 1
+      
+  build-macos:
+    # The type of runner that the job will run on
+    runs-on: macos-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+      
+      - name: Install pipenv
+        run: pipx install pipenv
+      
+      - name: Install Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          cache: 'pipenv'
+      
+      - name: Setup environment
+        run: pipenv install
+      
+      - name: Build the executable using cx_freeze
+        run: pipenv run python ./cxfreeze_setup.py build -b macos
+      
+      - name: Compress the executable
+        run: zip -r build/gparch_cli_macos.zip macos
+
+      - name: Upload executable
+      - uses: actions/upload-artifact@v3
+        with:
+          name: gparch_cli_macos
+          path: build/gparch_cli_macos.zip
+          retention-days: 1
+
   release:
+    needs: [build-windows, build-linux, build-macos]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
+      
+      - name: Get Windows Executable
+        uses: actions/download-artifact@v3
+        with:
+          name: gparch_cli_win64
+
+      - name: Get Linux Executable
+        uses: actions/download-artifact@v3
+        with:
+          name: gparch_cli_linux
+
+      - name: Get MacOS Executable
+        uses: actions/download-artifact@v3
+        with:
+          name: gparch_cli_macos
+      
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.event.inputs.version }}
           files: |
-            build/gparch_cli_win64.zip
-            build/gparch_cli_linux.tar.gz
-            build/gparch_cli_macos.zip
+            gparch_cli_win64.zip
+            gparch_cli_linux.tar.gz
+            gparch_cli_macos.zip
