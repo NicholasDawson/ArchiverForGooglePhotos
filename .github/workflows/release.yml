@@ -9,10 +9,8 @@ on:
 
 jobs:
   build-windows:
-    # The type of runner that the job will run on
     runs-on: windows-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -36,17 +34,15 @@ jobs:
         run: tar.exe -acf build/gparch_cli_win64.zip win64
 
       - name: Upload executable
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: gparch_cli_win64
           path: build/gparch_cli_win64.zip
           retention-days: 1
       
   build-linux:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -70,17 +66,15 @@ jobs:
         run: tar -czvf build/gparch_cli_linux.tar.gz linux
 
       - name: Upload executable
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: gparch_cli_linux
           path: build/gparch_cli_linux.tar.gz
           retention-days: 1
       
   build-macos:
-    # The type of runner that the job will run on
     runs-on: macos-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
@@ -104,7 +98,7 @@ jobs:
         run: zip -r build/gparch_cli_macos.zip macos
 
       - name: Upload executable
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: gparch_cli_macos
           path: build/gparch_cli_macos.zip
