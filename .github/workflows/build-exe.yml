@@ -28,15 +28,12 @@ jobs:
       
       - name: Build the executable using cx_freeze
         run: pipenv run python ./cxfreeze_setup.py build -b win64
-      
-      - name: Compress the executable
-        run: tar.exe -acf gparch_cli_win64.zip win64
 
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
           name: gparch_cli_win64
-          path: gparch_cli_win64.zip
+          path: win64
           retention-days: 7
       
   build-linux:
@@ -62,15 +59,12 @@ jobs:
       
       - name: Build the executable using cx_freeze
         run: pipenv run python ./cxfreeze_setup.py build -b linux
-      
-      - name: Compress the executable
-        run: tar -czvf gparch_cli_linux.tar.gz linux
 
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
           name: gparch_cli_linux
-          path: gparch_cli_linux.tar.gz
+          path: linux
           retention-days: 7
       
   build-macos:
@@ -96,13 +90,10 @@ jobs:
       
       - name: Build the executable using cx_freeze
         run: pipenv run python ./cxfreeze_setup.py build -b macos
-      
-      - name: Compress the executable
-        run: zip -r gparch_cli_macos.zip macos
 
       - name: Upload executable
         uses: actions/upload-artifact@v3
         with:
           name: gparch_cli_macos
-          path: gparch_cli_macos.zip
+          path: macos
           retention-days: 7
