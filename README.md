@@ -8,12 +8,8 @@
 
 If you need assistance or want to report an issue fill out an [Issue Report](https://github.com/NicholasDawson/ArchiverForGooglePhotos/issues) or email me `github (at) ndawson.me`
 
-# Downloads
+# [Downloads](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases)
 > If you are unfamiliar with python or computers in general I recommend you download an executable as it will not require any special installation.
-#### [Windows x64](https://github.com/NicholasDawson/ArchiverForGooglePhotos/raw/master/build/gparch_cli_win64.zip)
-#### [Linux x64](https://github.com/NicholasDawson/ArchiverForGooglePhotos/raw/master/build/gparch_cli_linux.tar.gz)
-#### [macOS x64](https://github.com/NicholasDawson/ArchiverForGooglePhotos/raw/master/build/gparch_cli_macos.zip)
-
 
 ## Python Script
 If you are familiar with python, just download the [source code](https://github.com/NicholasDawson/ArchiverForGooglePhotos/releases)
