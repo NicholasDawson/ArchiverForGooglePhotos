@@ -21,7 +21,7 @@ Install dependencies using pipenv
 `pipenv install`
 
 # Commands
-> This guide assumes you have downloaded Google API Credentials and have them saved in some location on your computer, if you have no idea what this is please follow the [Google Slides Presentation](https://docs.google.com/presentation/d/1nrNmM6iUSPXU5C9DjxG9gyaAAFKYXuMMeQVxqBYyRMM/edit?usp=sharing "Link")
+> This guide assumes you have downloaded Google API Credentials and have them saved in some location on your computer, if you have no idea what this is please follow the [instructions](INSTRUCTIONS.md)
 
 ## Usage:
 ```
