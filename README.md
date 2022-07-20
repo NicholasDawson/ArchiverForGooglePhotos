@@ -3,7 +3,7 @@
 
 # Instructions:
 1. Download the script (exe or python script listed below)
-2. Follow the instructions in the [Google Slides Presentation](https://docs.google.com/presentation/d/1nrNmM6iUSPXU5C9DjxG9gyaAAFKYXuMMeQVxqBYyRMM/edit?usp=sharing "Link")
+2. Follow the [instructions](INSTRUCTIONS.md)
 3. Reference the command guide below to learn the different commands available to you.
 
 If you need assistance or want to report an issue fill out an [Issue Report](https://github.com/NicholasDawson/ArchiverForGooglePhotos/issues) or email me `github (at) ndawson.me`
