@@ -23,7 +23,7 @@ https://console.cloud.google.com/ Agree to TOS and continue.
 ## Click “Enable APIs and Services” to view a dropdown menu
 ![Screenshot](Instructions/6.jpg)
 
-## Sarch “Photos Library API” and click on the Photos Library API card
+## Search “Photos Library API” and click on the Photos Library API card
 ![Screenshot](Instructions/7.jpg)
 
 ## Click “Enable” to enable the API on this project
